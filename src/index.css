@@ -1,0 +1,28 @@
+.login{
+  position:absolute;
+  right: 220px;
+}
+.signupbtn{
+  position: absolute;
+  left: 10px;
+}
+.cancelIcon{
+  position: absolute;
+  left: 120px;
+}
+.cancelIconsignup{
+  position: absolute;
+  left: 50px;
+}
+.userIcon{
+  position: absolute;
+  /* top:7px; */
+}
+.resheduleSave{
+ position: relative;
+ left: 560px;
+}
+.cancelNew{
+  position: absolute;
+  left:20%;
+}
