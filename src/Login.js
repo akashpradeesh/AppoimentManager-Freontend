@@ -12,6 +12,7 @@ import SignUp from './SignUp';
 import LoginIcon from '@mui/icons-material/Login';
 import axios from 'axios';
 import Cookies from 'js-cookie'
+import Alert from '@mui/material/Alert';
 import CancelIcon from '@mui/icons-material/Cancel';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 
@@ -20,6 +21,7 @@ export default function Login() {
   const form = React.useRef(null);
   const [detail,setDetail]=React.useState({email:"",password:""})
   let navigate = useNavigate();
+  const [incorrect,setIncorrect]= React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -28,6 +30,7 @@ export default function Login() {
     setOpen(false);
   };
   const handleChange=(e)=>{
+    setIncorrect(false);
     const {name,value} =e.target
     const newData = {...detail}
     newData[name]=value
@@ -46,7 +49,7 @@ export default function Login() {
         // console.log(Cookies.get('user'))
         navigate('/Welcome')
       }else{
-        alert('Incorrect username or password')
+        setIncorrect(true);
       }
     })
   }}
@@ -67,6 +70,7 @@ export default function Login() {
           <DialogContentText>
             Login to Check your appointments.
           </DialogContentText>
+          {(incorrect === true)?(<Alert severity="error">Incorrect username or password!</Alert>):(null)}
           <TextValidator
             autoFocus
             margin="dense"

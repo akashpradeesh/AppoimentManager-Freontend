@@ -10,39 +10,60 @@ import axios from 'axios';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import Alert from '@mui/material/Alert';
+import Slide from '@mui/material/Slide';
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+
 
 export default function SignUp() {
     const [open, setOpen] = React.useState(false);
+    const [exist,setExist] = React.useState(false);
+    const [pswdMatch,setPswdMatch] = React.useState(false)
   const form = React.useRef(null);
   const [detail,setDetail]=React.useState({email:"",password:"",confirmpswd:""})
+  const [opens, setOpens] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+  const handleCloses = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpens(false);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+  
   const handleChange=(e)=>{
+    setExist(false)
+    setPswdMatch(false)
     const {name,value} =e.target
     const newData = {...detail}
     newData[name]=value
     setDetail(newData)
-    console.log(detail)
   }
+  
   const handleSubmit=()=>{
     if(detail.confirmpswd === detail.password){
       axios.post('newUser',detail).then((response)=>{
         if(response.data === true){
-          
-          alert("User Already exist")
+          setExist(true);
         }else{
+          setOpens(true)
+          
           setOpen(false)
-          alert('Successfully Registered')
+          
         }
       })
     }else{
-      alert("Password does not matches")
+      setPswdMatch(true);
     }
     }
     
@@ -50,6 +71,7 @@ export default function SignUp() {
 
   return (
     <div>
+      
       <Button variant="outlined"  className=
       'signupbtn' onClick={handleClickOpen}>
         SignUp<ExitToAppIcon/>
@@ -65,6 +87,8 @@ export default function SignUp() {
           <DialogContentText>
             Sign Up to Check your appointments.
           </DialogContentText>
+          {(exist === true)?(<Alert severity="warning">User Already exists!</Alert>):(null)}
+          {(pswdMatch === true)?(<Alert severity="error">Password does not matches!</Alert>):(null)}
           <TextValidator
             autoFocus
             margin="dense"
@@ -116,9 +140,18 @@ export default function SignUp() {
           type='submit'
           color='success'
           >Sign in</Button>
+
+          
         </DialogActions>
         </ValidatorForm>
       </Dialog>
+      <Stack spacing={2} sx={{ width: '100%' }}>
+      <Snackbar open={opens} autoHideDuration={6000} onClose={handleCloses}>
+        <Alert onClose={handleCloses} severity="success" sx={{ width: '100%' }}>
+          Successfully Registered!
+        </Alert>
+      </Snackbar>
+      </Stack>
     </div>
   );
 }
