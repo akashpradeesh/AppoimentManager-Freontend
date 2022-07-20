@@ -11,10 +11,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Alert from '@mui/material/Alert';
-import Slide from '@mui/material/Slide';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 
 
 
@@ -40,7 +38,7 @@ export default function SignUp() {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   const handleChange=(e)=>{
     setExist(false)
     setPswdMatch(false)
@@ -72,7 +70,7 @@ export default function SignUp() {
   return (
     <div>
       
-      <Button variant="outlined"  className=
+      <Button size='small' variant="outlined"  className=
       'signupbtn' onClick={handleClickOpen}>
         SignUp<ExitToAppIcon/>
       </Button>

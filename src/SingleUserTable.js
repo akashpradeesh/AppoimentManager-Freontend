@@ -15,6 +15,7 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import SaveIcon from '@mui/icons-material/Save';
 import Cookies from 'js-cookie';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export default function SingleUserTable({userData}) {
     const userName = Cookies.get('user');
@@ -31,6 +32,7 @@ export default function SingleUserTable({userData}) {
         // console.log(response.data)
       })
     },[singleUserData])
+    const singleUserEvent = singleUserData.event
     // console.log(userData)
     // const [userDetails,setUserDetails]=React.useState('');
     const handleChange = (e,index) => {
@@ -43,6 +45,12 @@ export default function SingleUserTable({userData}) {
     const saveVisibility =()=> {
         setSaveIcon(false);
     }
+    const handleOnCickReshedule=(index)=>{
+        const newValue =[...schedule];
+        newValue[index] =false; 
+        setSchedule(newValue)
+        setSaveIcon(false)
+    }
     const handleOnClick = (index,event,date)=>{
         console.log(index)
         if(action[index]=== "Reshedule"){
@@ -52,7 +60,7 @@ export default function SingleUserTable({userData}) {
             setSaveIcon(false)
             // console.log(schedule)
         }
-            if(action[index] === 'Cancel'){
+        if(action[index]==='Cancel'){
             axios.delete(`/handleDelete`,{params:{key1:index,key2:event,key3:date,key4:userName}}).then()
         }
     }
@@ -76,8 +84,24 @@ export default function SingleUserTable({userData}) {
         setSaveIcon(true);
         axios.post(`/DateChange`,{dateChange,userName}).then()
     }
+    const handleClickCancel=(index)=>{
+        const newValue =[...schedule];
+        newValue[index] =true; 
+        setSchedule(newValue)
+        setSaveIcon(true)
+    }
+    const handleCancelBtn = (index)=>{
+        const newValue =[...schedule];
+        newValue[index] =true; 
+        setSchedule(newValue)
+        setSaveIcon(true)
+        const newValues = [...action];
+        newValues[index]= ''
+        setAction([newValues])
+    }
     // console.log(action);
     return (
+        <div>
         <TableContainer component={Paper}>
             <Table sx={{ maxWidth: 2000 }} aria-label="simple table">
                 <TableHead>
@@ -101,26 +125,26 @@ export default function SingleUserTable({userData}) {
                 <TableCell align="right">{data.duration}</TableCell>
               </TableRow>
             ))} */}
-            {singleUserData.map((data,index)=>
+            {singleUserData.map((data,index)=>(
                     <TableRow
                 // key={data.Date}
                 // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                 <TableCell component='th' scope='row' name='event'>{data.event}</TableCell>
-                <TableCell align='right' name='date'>{(schedule[index] === false)?(<a><input type='date'  name="date" min={todayDate} onChange={(e)=>{handleDateChange(e,data.event)}}></input><Button onClick={()=>{handleDateOnChange(index)}}><SaveIcon className='resheduleSave'/></Button></a>):(<a>{data.date}</a>)}</TableCell>
+                <TableCell align='right' name='date'>{(schedule[index] === false)?(<a><input type='date'  name="date" min={todayDate} onChange={(e)=>{handleDateChange(e,data.event)}}></input><Button onClick={()=>{handleCancelBtn(index)}}><CancelIcon className='resheduleCancel'/></Button><Button onClick={()=>{handleDateOnChange(index)}}><SaveIcon className='resheduleSave'/></Button></a>):(<a>{data.date}</a>)}</TableCell>
                 <TableCell align='right'><Box sx={{ minWidth:120 }}>
                 <FormControl fullWidth>
                     <InputLabel id='demo-simple-select-label'>Action</InputLabel>
                 <Select labelId='demo-simple-select-label' label='Action' value={action[index]} onChange={(e)=>handleChange(e,index)}>
-                    <MenuItem value={"Reshedule"}>Reshedule</MenuItem>
-                    <MenuItem value ={"Cancel"}>Cancel</MenuItem>
+                    <MenuItem onClick={()=>{handleOnCickReshedule(index)}}value={"Reshedule"}>Reshedule</MenuItem>
+                    <MenuItem onClick={()=>{handleClickCancel(index)}} value ={"Cancel"}>Cancel</MenuItem>
                     </Select>
 
                     </FormControl>
                     </Box></TableCell>
                     {saveIcon === true?<TableCell align='right' name='date'><Button onClick={()=>{handleOnClick(index,data.date,data.event)}}><SaveIcon/></Button></TableCell>:null}
                     </TableRow>              
-            )}
+    ))}
             
                     {/* <TableRow><TableCell>1</TableCell>
                         <TableCell align='right'>2</TableCell>
@@ -144,5 +168,6 @@ export default function SingleUserTable({userData}) {
                 </TableBody>
             </Table>
         </TableContainer>
+        </div>
     );
 }

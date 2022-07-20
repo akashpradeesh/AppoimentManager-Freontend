@@ -72,8 +72,9 @@ export default function WelcomePage() {
     }
   return (
     <div><center><h1> <Avatar sx={{ bgcolor: deepPurple[500] }}>{username[0]}</Avatar>Welcome {username} </h1></center>  
-    <Button color='error' onClick={handleLogOut}>Logout<LogoutIcon/></Button>
-    <Button variant='contained' onClick={handleOpen}><Icon color="inherit">add_circle</Icon> New Appointment</Button><br/><br/><br/>
+    <Button variant='contained' onClick={handleOpen}><Icon color="inherit">add_circle</Icon> New Appointment</Button>
+    <Button color='error' className='logOutUser' onClick={handleLogOut}>Logout<LogoutIcon  /></Button><br/><br/><br/>
+    
     <Dialog open={open} onClose={handleClose}>
     <DialogTitle>New Appointment <Button className='cancelNew' color='error'><CancelIcon  onClick={handleClose}/></Button></DialogTitle>
         <DialogContent>
@@ -112,8 +113,10 @@ export default function WelcomePage() {
           <Button onClick={handleAdd}>create</Button>
         </DialogActions>
     </Dialog>
+    
+    <span>
     <SingleUserTable userData={username}/>
-    </div>
+    </span></div>
 
   )
 }

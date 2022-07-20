@@ -28,7 +28,7 @@ export default function WelcomeAdmin() {
     //   backgroundPosition: 'center',
     // }}
     ><h1 ><center>Welcome Admin <SupervisorAccountIcon fontSize='large'/></center></h1>
-    <Button color='error' varient='contained'
+    <Button color='error' varient='contained' className='logoutButton'
       onClick={handleLogOut}>Logout<LogoutIcon/></Button><br/><br/><br/>
         <TableData dataBase = {dataBase}/>
     </div>

@@ -4,7 +4,7 @@
 }
 .signupbtn{
   position: absolute;
-  left: 10px;
+  left: 6px;
 }
 .cancelIcon{
   position: absolute;
@@ -19,10 +19,22 @@
   /* top:7px; */
 }
 .resheduleSave{
- position: relative;
- left: 560px;
+ position: absolute;
+ left: 520px;
 }
 .cancelNew{
   position: absolute;
   left:20%;
+}
+.resheduleCancel{
+  position: absolute;
+  left: 540px;
+}
+.logOutUser{
+  position: absolute;
+  left: 970px;
+}
+.logoutButton{
+  position: absolute;
+  left: 1160px;
 }
