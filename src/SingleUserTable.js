@@ -52,7 +52,7 @@ export default function SingleUserTable({userData}) {
             setSaveIcon(false)
             // console.log(schedule)
         }
-        else{
+            if(action[index] === 'Cancel'){
             axios.delete(`/handleDelete`,{params:{key1:index,key2:event,key3:date,key4:userName}}).then()
         }
     }

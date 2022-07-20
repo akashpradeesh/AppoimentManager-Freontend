@@ -38,7 +38,7 @@ export default function TableData({dataBase}) {
             const paid = [...status]
             paid[index] = 'Paid'
             setStatus(paid)
-        }else{
+        }else if(action[index]==='Approve'){
             const paid = [...status]
             paid[index] = 'Scheduled'
             setStatus(paid)
