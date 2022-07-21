@@ -1,0 +1,15 @@
+.overall{
+  
+  /* margin: auto; */
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  width: 50%;
+  border: 1px solid;
+  padding: 10px;
+  
+}
+
+.intro{
+    padding: 5px;
+}
