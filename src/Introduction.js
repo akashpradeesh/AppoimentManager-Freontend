@@ -15,7 +15,10 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import GoogleLoginComponent from './googlebutton.component';
+import { auth,provider } from './firebase';
+import { signInWithPopup } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function Copyright(props) {
   return (
@@ -30,6 +33,7 @@ function Copyright(props) {
   );
 }
 
+
 const theme = createTheme();
 
 export default function SignInSide() {
@@ -41,6 +45,19 @@ export default function SignInSide() {
       password: data.get('password'),
     });
   };
+  const navigate = useNavigate();
+
+const googleSignIn=()=>{signInWithPopup(auth,provider).then((result)=>{
+  const emailid = result.user.email
+  const profilePic = result.user.photoURL
+  Cookies.set('profilepic',profilePic)
+  console.log(profilePic)
+  Cookies.set('user',emailid.slice(0,-10))
+  navigate('/Welcome')
+  // console.log(emailid)
+}).catch((error)=>{
+console.log(error)
+})};
 
   return (
     <ThemeProvider theme={theme}>
@@ -117,9 +134,16 @@ export default function SignInSide() {
                 </Grid>
                 <Grid item>
                     {"Don't have an account?"}
-                </Grid><SignUp/><br/><br/>
+                </Grid><SignUp/><br/><br/><br/><br/><Grid className='or'>or</Grid>
+                
                 {/* <GoogleLoginComponent/> */}
               </Grid>
+              <button
+                onClick={ googleSignIn }
+                className='login-with-google-btn'
+                >
+                  Sign In Google
+                </button>
               <Copyright 
               sx={{ mt: 5 }} 
               />

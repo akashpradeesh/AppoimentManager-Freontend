@@ -16,8 +16,12 @@ import Avatar from '@mui/material/Avatar';
 import { deepPurple } from '@mui/material/colors';
 import CancelIcon from '@mui/icons-material/Cancel';
 
+// import { signInWithGoogle,auth,provider } from './firebase';
+// import { signInWithPopup } from 'firebase/auth';
+
 export default function WelcomePage() {
     const [open, setOpen] = React.useState(false);
+
     const username = Cookies.get('user');
     // const usersname = username.toUpperCase
     
@@ -38,10 +42,17 @@ export default function WelcomePage() {
     // axios.get('/userTableDetails',{params:{name:username}}).then((response)=>{
     //   setUserData(response.data)
     // })
-    
+    // const signInWithGoogle=()=>{signInWithPopup(auth,provider).then((result)=>{
+    //     const name = result.user.name
+    //     navigate('/Welcome')
+    //     console.log(name)
+    // }).catch((error)=>{
+    //   console.log(error)
+    // })};
     const handleOpen = () => {
         setOpen(true);
       };
+    const profileimg = Cookies.get('profilepic');
     // const avatarname = ()=>{
     //     username.slice(1,20)
     // };
@@ -49,6 +60,7 @@ export default function WelcomePage() {
         setOpen(false);
     }
     const handleLogOut=()=>{
+      Cookies.set('profilepic','')
       navigate('/')
     }
     const today = new Date();
@@ -71,7 +83,11 @@ export default function WelcomePage() {
       
     }
   return (
-    <div><center><h1> <Avatar sx={{ bgcolor: deepPurple[500] }}>{username[0]}</Avatar>Welcome {username} </h1></center>  
+    <div><center><h1> 
+      {profileimg.length?<Avatar src={profileimg}/>:<Avatar sx={{ bgcolor: deepPurple[500] }}>{username[0]}</Avatar>}
+    Welcome {username}
+    {/* {username.length ?username:googleuser}  */}
+    </h1></center>  
     <Button variant='contained' onClick={handleOpen}><Icon color="inherit">add_circle</Icon> New Appointment</Button>
     <Button color='error' className='logOutUser' onClick={handleLogOut}>Logout<LogoutIcon  /></Button><br/><br/><br/>
     
